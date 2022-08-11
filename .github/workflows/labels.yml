@@ -1,0 +1,68 @@
+name: Sync labels
+on:
+    # You can run this with every type of event, but it's better to run it only when you actually need it.
+    issues:
+        types:
+            - opened
+    pull_request:
+        types:
+            - opened
+    workflow_dispatch:
+    schedule:
+    - cron: "*/10 * * * *"
+
+jobs:
+    sync_server:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: EndBug/label-sync@v2
+              with:
+                  # If you want to use a source repo, you can put is name here (only the owner/repo format is accepted)
+                  source-repo: shriproperty/server
+
+                  # If you want to delete any additional label, set this to true
+                  delete-other-labels: false
+
+                  # If you want the action just to show you the preview of the changes, without actually editing the labels, set this to true
+                  dry-run: false
+
+                  # You can change the token used to change the labels, this is the default one
+                  token: ${{ secrets.GH_TOKEN }}
+                  
+                  
+    sync_client:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: EndBug/label-sync@v2
+              with:
+                  # If you want to use a source repo, you can put is name here (only the owner/repo format is accepted)
+                  source-repo: shriproperty/client
+
+                  # If you want to delete any additional label, set this to true
+                  delete-other-labels: false
+
+                  # If you want the action just to show you the preview of the changes, without actually editing the labels, set this to true
+                  dry-run: false
+
+                  # You can change the token used to change the labels, this is the default one
+                  token: ${{ secrets.GH_TOKEN }}
+                  
+    sync_admin-app:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: EndBug/label-sync@v2
+              with:
+                  # If you want to use a source repo, you can put is name here (only the owner/repo format is accepted)
+                  source-repo: shriproperty/admin-app
+
+                  # If you want to delete any additional label, set this to true
+                  delete-other-labels: false
+
+                  # If you want the action just to show you the preview of the changes, without actually editing the labels, set this to true
+                  dry-run: false
+
+                  # You can change the token used to change the labels, this is the default one
+                  token: ${{ secrets.GH_TOKEN }}
